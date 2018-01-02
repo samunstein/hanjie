@@ -1,3 +1,7 @@
+VALKOINEN = "  "
+MUSTA = "X "
+
+
 class Hanjie:
     @staticmethod
     def parsi_vihjeet(vihjestr):
@@ -119,7 +123,7 @@ class Hanjie:
             self.varmaväri = None
 
         def __str__(self):
-            return "? " if self.varmaväri is None else "  " if self.varmaväri == 0 else "X "
+            return "? " if self.varmaväri is None else VALKOINEN if self.varmaväri == 0 else MUSTA
 
     def __init__(self, ylavihjeet, vasenvihjeet):
         self.vasenvihjeet = vasenvihjeet
@@ -199,69 +203,59 @@ class Hanjie:
         return self.aseta_varmat(sarake, vihje, muisti, vaihtoehdot)
 
 ylävihje = """
-6 1
-1 5 1
-2 6
-1 4
-1 2 2 3
-1 1 1 2 3
-1 2 2 2 2 1
-1 1 3 3 2 2 2
-1 1 11 2 3
-1 1 3 9 2 2
-1 2 2 1 1 4 3 2
-1 1 2 1 3 2 1
-1 1 2 2 3 3 1
-2 1 2 3 5
-1 1 1 1 3 4
-1 1 1 1 3 3
-1 1 1 4 5
-1 1 1 6 3 2
-5 1 2 2 5 1
-7 3 2 1 3 1
-10 2 2 3 2
-8 1 1 3 1
-9 2 4
-7 3 1 4 1
-5 3 1 4 2 1
-1 3 2 2 2 2
-1 1 2 3 3 3
-2 1 2 2 2 4
-1 1 2 4 2 4
-1 1 2 6 2 2
+17
+5 9
+4 2 3
+3 1 3 2
+6 6
+4 1 1 2
+5 2 2
+3 5 1
+2 3 2 1
+2 1 1 1 1
+3 1 1 2 1 1
+1 1 2 1 1
+1 2 1 1
+2 1 1 1 1
+3 1 1 1 1
+3 2 1
+2 1 2 1
+4 2 2
+5 3
+3 1 6
+5 3 2
+3 1 3 2
+4 2 3
+6 8
+16
 """
 
 vasenvihje = """
-3 5
-4 7 3
-15
+6 5
 7 7
-20
+9 10
+3 6 7 3
+2 2 2 2 2 2 2 2
+1 3 1 1 4 2
+1 1 1
+1 1
+1 1
+1 1
+2 2
+2 2
+2 1 2 3
+3 4 4
+4 1 2
+2 1 5 3 2 2
+2 2 3 2 2 2
+2 11 1 2 2
+2 1 1 3 1 1 2
+3 2 1 3
+2 1 4 3
+2 2
+2 2
+2 2
 8
-1 5 2
-1 1 3 2
-1 2 1 1 2 2
-3 1 1 2 1 2
-2 1 2 1 2 1
-2 3 1 1
-7 2
-5 2 1
-2 5
-12
-14 1
-7 2 3 2
-7 2 3 1 2
-3 2 3 4
-2 3 2 6
-2 3 1
-1 2 3 3
-3 2 2 3 4
-3 1 3 1 7 2 1
-4 10 7 2
-8 9 2 2 2
-6 1 5 1 3
-3 4 5 1 5
-2 7 6 6
 """
 
 h = Hanjie(Hanjie.parsi_vihjeet(ylävihje), Hanjie.parsi_vihjeet(vasenvihje))
