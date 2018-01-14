@@ -72,6 +72,11 @@ class Hanjie:
         if [r.varmaväri for r in ruudut] == muisti:
             return False
 
+        # Jos ruudut ovat epävarmoja, ja pystytään laskemaan, että mitään ei saada tietoon, niin ei tehdä mitään
+        if False not in [r.varmaväri is None for r in ruudut] and \
+           len(ruudut) - (sum(vihje) + len(vihje)) - 1 >= max(vihje):
+            return False
+
         muutos = False
         on_varma = len(ruudut) * [True]  # Tieto, onko varmat-muuttujan tieto varma tieto
         varmat = None  # Lista numeroita (1 tai 0), jotka saattavat olla varmoja oikeita värejä
@@ -203,59 +208,69 @@ class Hanjie:
         return self.aseta_varmat(sarake, vihje, muisti, vaihtoehdot)
 
 ylävihje = """
-17
-5 9
-4 2 3
-3 1 3 2
-6 6
-4 1 1 2
-5 2 2
-3 5 1
-2 3 2 1
-2 1 1 1 1
-3 1 1 2 1 1
-1 1 2 1 1
-1 2 1 1
-2 1 1 1 1
-3 1 1 1 1
-3 2 1
-2 1 2 1
-4 2 2
-5 3
-3 1 6
-5 3 2
-3 1 3 2
-4 2 3
-6 8
-16
+2
+3 3
+6 1 2
+6 7 2 1
+2 5 7 1 1
+2 5 3 3 1 1
+2 2 6 2 1 1
+2 3 1 4 2 1
+2 1 1 3 1 1
+2 1 1 1 3 3
+4 1 4
+1 2 6
+1 3 1
+1 1 1
+1 4
+4
+8
+2 10 1
+8 7 8
+4 1 7 1 5
+4 1 1 9 5
+4 1 5
+4 1 6
+5 6 1 5
+9 3 4 1 1
+6 1 1 4 1 2
+3 1 10 7
+1 4 1 2
+2 5 1 1
+6 2 3
 """
 
 vasenvihje = """
-6 5
-7 7
-9 10
-3 6 7 3
-2 2 2 2 2 2 2 2
-1 3 1 1 4 2
-1 1 1
-1 1
-1 1
-1 1
-2 2
-2 2
-2 1 2 3
-3 4 4
-4 1 2
-2 1 5 3 2 2
-2 2 3 2 2 2
-2 11 1 2 2
-2 1 1 3 1 1 2
-3 2 1 3
-2 1 4 3
-2 2
-2 2
-2 2
-8
+7
+9
+10
+9
+1 4
+1 1 2
+1 2
+2 1
+6 1 2
+8 3 3
+1 1 1 1
+10 1 2
+5 1 1 1 1
+3 1 1 1 1 1 1
+3 1 3 1 1 1
+3 1 6 1 1 1
+1 4 10 1
+5 6 1 1
+6 6 6
+9 13
+3 9 4 7
+4 6 1 1 1 7
+5 4 6 1 1
+1 4 1 5 7
+1 1 1 5 1
+1 1 1 1 1 3 1
+5 1 1 1 1 3 1
+2 1 1 1 1 3 1
+3 1 1 1 3 3
+3 4 5 5
 """
 
 h = Hanjie(Hanjie.parsi_vihjeet(ylävihje), Hanjie.parsi_vihjeet(vasenvihje))
