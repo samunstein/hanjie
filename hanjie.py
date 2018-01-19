@@ -1,5 +1,8 @@
-VALKOINEN = "  "
+VALKOINEN = ". "
 MUSTA = "X "
+KYSSÄRI = "? "
+RUUDUKKO = True
+VAIN_ALKU = True
 
 
 class Hanjie:
@@ -128,7 +131,7 @@ class Hanjie:
             self.varmaväri = None
 
         def __str__(self):
-            return "? " if self.varmaväri is None else VALKOINEN if self.varmaväri == 0 else MUSTA
+            return KYSSÄRI if self.varmaväri is None else VALKOINEN if self.varmaväri == 0 else MUSTA
 
     def __init__(self, ylavihjeet, vasenvihjeet):
         self.vasenvihjeet = vasenvihjeet
@@ -159,7 +162,25 @@ class Hanjie:
             self.muisti_sarakkeet.append(len(self.vasenvihjeet) * [0])
 
     def __str__(self):
-        return "\n".join(["".join([str(ruutu) for ruutu in ruuturivi]) for ruuturivi in self.ruudut])
+        if RUUDUKKO:
+            rstr = ""
+            spaces_in_end = len(MUSTA) - len(MUSTA[::-1].lstrip())
+            for y in range(len(self.vasenvihjeet)):
+                if y != 0 and y % 5 == 0:
+                    for x in range(len(self.ylavihjeet)):
+                        if x != 0 and x % 5 == 0:
+                            rstr += "+" + ((len(MUSTA) - 1) * "-" if x != len(self.ylavihjeet) - 1 else (len(MUSTA) - 1 - spaces_in_end) * "-")
+                        rstr += "-" + ((len(MUSTA) - 1) * "-" if x != len(self.ylavihjeet) - 1 else (len(MUSTA) - 1 - spaces_in_end) * "-")
+                    rstr += "\n"
+                for x in range(len(self.ylavihjeet)):
+                    if x != 0 and x % 5 == 0:
+                        rstr += "|" + (len(MUSTA) - 1) * " "
+                    rstr += str(self.ruudut[y][x])
+                rstr += "\n"
+            return rstr
+
+        else:
+            return "\n".join(["".join([str(ruutu) for ruutu in ruuturivi]) for ruuturivi in self.ruudut])
 
     def rivi(self, y):
         return self.ruudut[y]
@@ -192,6 +213,8 @@ class Hanjie:
         while muutos:
             muutos = self.kaikki_varmat()
             print("{:.0f}% ratkaistu".format(100 * (1 - self.kyssäriruudut() / len(self.vasenvihjeet) / len(self.ylavihjeet))))
+            if VAIN_ALKU:
+                break
 
     def varmat_rivi(self, y):
         rivi = self.rivi(y)
@@ -208,69 +231,69 @@ class Hanjie:
         return self.aseta_varmat(sarake, vihje, muisti, vaihtoehdot)
 
 ylävihje = """
-2
-3 3
-6 1 2
-6 7 2 1
-2 5 7 1 1
-2 5 3 3 1 1
-2 2 6 2 1 1
-2 3 1 4 2 1
-2 1 1 3 1 1
-2 1 1 1 3 3
-4 1 4
-1 2 6
-1 3 1
-1 1 1
-1 4
-4
+19 1 1
+24 1 1
+21 1
+7 1 1 1 2 1
+8 7 1
+1 2 1 1 1 4
+2 4 1 1 1 5
+2 1 1 7 1 6
+8 3 5 1 6
+4 5 1 6
+4 5 1 5
+4 5 1 4
+4 5 1 2
+9 4 1 1 1 3
+9 4 1 1 1 5
+9 4 6 6
+9 4 1 10
+2 5 3 3
+2 1 1 3 2 2 2
+2 1 2 3 3
+2 1 1 4 8
+7 2 3 1 4
+8 1 1 1
+10 6 2 1
+2 1 1 1 5
+2 1 1 1 1 5 8
+2 1 1 8
+11 5 3 2
+1 1 6
 8
-2 10 1
-8 7 8
-4 1 7 1 5
-4 1 1 9 5
-4 1 5
-4 1 6
-5 6 1 5
-9 3 4 1 1
-6 1 1 4 1 2
-3 1 10 7
-1 4 1 2
-2 5 1 1
-6 2 3
 """
 
 vasenvihje = """
-7
-9
-10
-9
-1 4
-1 1 2
-1 2
-2 1
-6 1 2
-8 3 3
-1 1 1 1
-10 1 2
-5 1 1 1 1
-3 1 1 1 1 1 1
-3 1 3 1 1 1
-3 1 6 1 1 1
-1 4 10 1
-5 6 1 1
-6 6 6
-9 13
-3 9 4 7
-4 6 1 1 1 7
-5 4 6 1 1
-1 4 1 5 7
-1 1 1 5 1
-1 1 1 1 1 3 1
-5 1 1 1 1 3 1
-2 1 1 1 1 3 1
-3 1 1 1 3 3
-3 4 5 5
+6 4
+4 2 5 5
+4 2 6 3 2
+4 1 4 2 3 2
+4 2 4 5 1
+5 1 4 4 1 1
+5 2 4 1 3 1
+3 2 1 4 2 1 1
+3 2 1 4 1 1 1 1
+4 1 1 4 1 1 1
+3 1 1
+4 1 13 1 1
+3 11 3 1
+4 11 1 1 1
+3 11 3 3
+3 1 1 3 1 3
+3 13 2 1 1 3
+3 1 6 1 3 1 1
+3 1 6 1 3 1
+3 1 6 1 3
+3 16 1
+2 1 9 1
+2 11 2 2 5 1
+2 1 1 2 5
+14 1 2 5
+2 12 1 7 1
+7 4 2 3 1
+4 7 4 2 3 1
+5 7 5
+3 5 3
 """
 
 h = Hanjie(Hanjie.parsi_vihjeet(ylävihje), Hanjie.parsi_vihjeet(vasenvihje))
